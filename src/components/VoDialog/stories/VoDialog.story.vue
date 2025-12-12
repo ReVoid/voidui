@@ -1,0 +1,44 @@
+<script setup lang="ts">
+import {
+  ref,
+} from 'vue';
+
+import { VoDialog } from '@/components';
+
+const dialog_1 = ref<boolean>(false);
+const dialog_2 = ref<boolean>(false);
+const dialog_3 = ref<boolean>(false);
+</script>
+
+<template>
+  <article>
+    <h2>VoDialog.vue</h2>
+
+    <div>
+      <label>
+        <span>1</span>
+        <input type="checkbox" v-model="dialog_1" />
+      </label>
+      <label>
+        <span>2</span>
+        <input type="checkbox" v-model="dialog_2" />
+      </label>
+      <label>
+        <span>3</span>
+        <input type="checkbox" v-model="dialog_3" />
+      </label>
+    </div>
+
+    <VoDialog v-model:visible="dialog_1">
+      Dialog 1
+    </VoDialog>
+
+    <VoDialog v-model:visible="dialog_2">
+      Dialog 2
+    </VoDialog>
+
+    <VoDialog v-model:visible="dialog_3" >
+      Dialog 3
+    </VoDialog>
+  </article>
+</template>
