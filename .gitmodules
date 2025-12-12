@@ -1,0 +1,3 @@
+[submodule "src/submodules/voiduse"]
+	path = src/submodules/voiduse
+	url = https://github.com/ReVoid/voiduse.git
