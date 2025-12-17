@@ -1,21 +1,23 @@
 import type { VNode } from 'vue';
+import type { ISize } from '@/components/compositions'
 
 // TODO: Research making interface close to original HTMLDialogElement
 export interface IDialog {
   Props: {
-    visible?: boolean;
-    closable?: boolean;
-    persistent?: boolean;
-  };
+    visible?: boolean
+    closable?: boolean
+    persistent?: boolean
+    size?: ISize<'Medium' | 'Small'>['size'];
+  }
 
   Emits: {
-    'update:visible': [payload: boolean];
-    submit: [];
-  };
+    'update:visible': [payload: boolean]
+    submit: []
+  }
 
   Slots: {
-    header?: (props: { close: () => void; submit: () => void }) => VNode[];
-    default?: (props: { close: () => void; submit: () => void }) => VNode[];
-    footer?: (props: { close: () => void; submit: () => void }) => VNode[];
+    header?: (props: { close: () => void; submit: () => void }) => VNode[]
+    default?: (props: { close: () => void; submit: () => void }) => VNode[]
+    footer?: (props: { close: () => void; submit: () => void }) => VNode[]
   }
 }

@@ -29,7 +29,7 @@ const dialog_3 = ref<boolean>(false);
       </label>
     </div>
 
-    <VoDialog v-model:visible="dialog_1" closable>
+    <VoDialog v-model:visible="dialog_1" closable :size="{ width: '500px', height: '300px'}">
       Dialog 1
 
       <template #footer="{ close, submit }">
