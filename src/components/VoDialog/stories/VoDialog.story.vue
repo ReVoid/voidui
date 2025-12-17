@@ -29,8 +29,17 @@ const dialog_3 = ref<boolean>(false);
       </label>
     </div>
 
-    <VoDialog v-model:visible="dialog_1">
+    <VoDialog v-model:visible="dialog_1" closable>
       Dialog 1
+
+      <template #footer="{ close, submit }">
+        <button @click="close">
+          Close
+        </button>
+        <button @click="submit">
+          Submit
+        </button>
+      </template>
     </VoDialog>
 
     <VoDialog v-model:visible="dialog_2">

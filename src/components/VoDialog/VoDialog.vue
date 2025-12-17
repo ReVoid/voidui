@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import {
-  computed,
-  watch,
-} from 'vue';
+import { computed, watch } from 'vue';
+import { onKeyStroke } from '@vueuse/core';
 
 import type { IDialog } from '@/components';
 
 import { useDialogStack } from './composables';
-
 
 defineOptions({
   inheritAttrs: false,
@@ -22,7 +19,18 @@ type Component = IDialog;
 
 type Props = Component['Props'];
 
-const props = defineProps<Props>();
+type Emits = Component['Emits'];
+
+type Slots = Component['Slots'];
+
+const props = withDefaults(defineProps<Props>(), {
+  closable: false,
+  persistent: false,
+});
+
+const emit = defineEmits<Emits>();
+
+const slots = defineSlots<Slots>();
 
 const dialogs = useDialogStack();
 
@@ -36,13 +44,24 @@ const isActive = computed<boolean>(() => {
 // Should be the closest position to the HTML bottom.
 const TARGET = document.body;
 
-function open(): void {
-  visible.value = true;
-}
-
 function close(): void {
+  if (!props.closable) {
+    return;
+  }
+
   visible.value = false;
 }
+
+function submit(): void {
+  emit('submit');
+}
+
+onKeyStroke('Escape', (e) => {
+  if (isActive.value) {
+    e.preventDefault();
+    close();
+  }
+});
 
 watch(
   visible,
@@ -58,28 +77,75 @@ watch(
     immediate: true,
   },
 );
+
+watch(
+  isActive,
+  (isActive) => {
+    document.body.style.overflow = isActive
+      ? 'hidden'
+      : '';
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
   <Teleport v-if="isActive" :to="TARGET">
+    <div class="vo-dialog__backdrop" @click="close"></div>
     <article class="vo-dialog">
       <button v-if="props.closable" @click="close">Close</button>
-      <header>
+      <header v-if="slots.header">
         <div>
-          <slot name="header" :close="close" />
+          <slot
+            name="header"
+            :close="close"
+            :submit="submit"
+          />
         </div>
       </header>
       <div>
-        <slot name="default" :close="close" />
+        <slot
+          name="default"
+          :close="close"
+          :submit="submit"
+        />
       </div>
-      <footer>
-        <slot name="footer" :close="close" />
+      <footer v-if="slots.footer">
+        <slot
+          name="footer"
+          :close="close"
+          :submit="submit"
+        />
       </footer>
     </article>
   </Teleport>
 </template>
 
-<style scoped>
+<style lang="scss">
 .vo-dialog {
+  position: fixed;
+  border: 1px solid black;
+  padding: 16px;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 500px;
+  min-height: 500px;
+  max-width: 100vw;
+  max-height: 100vh;
+
+  &__backdrop {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 }
 </style>
