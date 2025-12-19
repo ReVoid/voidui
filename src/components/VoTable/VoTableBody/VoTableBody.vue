@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <tr>
+  <tbody>
     <slot name="default" />
-  </tr>
+  </tbody>
 </template>

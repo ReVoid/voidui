@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { VoTableRow } from '@/components';
+</script>
 
-<template></template>
-
-<style scoped lang="scss"></style>
+<template>
+  <thead>
+    <VoTableRow>
+      <slot name="default" />
+    </VoTableRow>
+  </thead>
+</template>

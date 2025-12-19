@@ -1,18 +1,36 @@
 import { type VNode } from 'vue';
 
-type Unit = 'px';
-
-type Column = {
-  width: number | `${number}` | `${number}${Unit}`;
-}
-
-export type IDataTable<TColumn extends Column, TRow> = {
+export type IVoTable<TColumns> = {
   Props: {
-    columns?: TColumn[];
-    rows?: TRow[];
-  }
+    columns?: Columns<TColumns>;
+    rows?: Rows<TColumns>;
+    selectable?: boolean;
+  };
 
   Slots: {
-    row?: (props: { row: TRow }) => VNode[];
-  }
-}
+    default?: () => VNode[];
+    header?: () => VNode[];
+    row?: () => VNode[];
+  } & RowColumnSlots<TColumns>;
+};
+
+type Unit = 'px';
+
+type ColumnOptions = {
+  title?: string;
+  width?: number | `${number}` | `${number}${Unit}`;
+};
+
+export type Columns<T> = T extends Record<string, unknown>
+  ? { [K in keyof T]: ColumnOptions }
+  : never;
+
+export type Row<T> = T extends Record<string, unknown>
+  ? { [K in keyof T]: T[K] }
+  : never;
+
+export type Rows<T> = Row<T>[];
+
+type RowColumnSlots<TColumns> = {
+  [K in keyof TColumns as `column[${Extract<K, string>}]`]: (props: { row: Row<TColumns> }) => VNode[];
+};
