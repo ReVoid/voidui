@@ -8,5 +8,5 @@ type SizeValue = {
 };
 
 export interface ISize<T extends SizeToken> {
-  size: T | SizeValue;
+  size?: T | SizeValue;
 }

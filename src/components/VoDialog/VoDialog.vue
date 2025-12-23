@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
+
 import { onKeyStroke } from '@vueuse/core';
 
-import type { IDialog } from '@/components';
-
 import { useDialogStack } from './composables';
+
+import type { IDialog } from '@/components';
 
 defineOptions({
   inheritAttrs: false,
@@ -81,9 +82,7 @@ watch(
 watch(
   isActive,
   (isActive) => {
-    document.body.style.overflow = isActive
-      ? 'hidden'
-      : '';
+    document.body.style.overflow = isActive ? 'hidden' : '';
   },
   {
     immediate: true,
@@ -94,30 +93,18 @@ watch(
 <template>
   <Teleport v-if="isActive" :to="TARGET">
     <div class="vo-dialog__backdrop" @click="close"></div>
-    <article class="vo-dialog">
+    <article class="vo-dialog" :class="props.class">
       <button v-if="props.closable" @click="close">Close</button>
       <header v-if="slots.header">
         <div>
-          <slot
-            name="header"
-            :close="close"
-            :submit="submit"
-          />
+          <slot name="header" :close="close" :submit="submit" />
         </div>
       </header>
       <div>
-        <slot
-          name="default"
-          :close="close"
-          :submit="submit"
-        />
+        <slot name="default" :close="close" :submit="submit" />
       </div>
       <footer v-if="slots.footer">
-        <slot
-          name="footer"
-          :close="close"
-          :submit="submit"
-        />
+        <slot name="footer" :close="close" :submit="submit" />
       </footer>
     </article>
   </Teleport>
