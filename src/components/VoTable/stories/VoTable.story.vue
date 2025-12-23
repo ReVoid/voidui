@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { type IVoTable, VoTable } from '@/components/';
 
 type Person = {
@@ -29,12 +31,23 @@ const rows: Component['Props']['rows'] = [
     age: 28,
   },
 ];
+
+const selected = ref<string[]>([]);
 </script>
 
 <template>
   <article>
     <h2>VoTable.vue</h2>
-    <VoTable :columns="columns" :rows="rows">
+    <p>
+      Selected: {{ selected }}
+    </p>
+    <VoTable
+      v-model:selected="selected"
+      :columns="columns"
+      :rows="rows"
+      selectable
+      :selector="(row) => row.name"
+    >
       <template #column[name]="{ row }">
         {{ row.name }}
       </template>

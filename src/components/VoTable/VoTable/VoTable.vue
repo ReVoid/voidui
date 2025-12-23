@@ -1,7 +1,8 @@
-<script setup lang="ts" generic="TColumns extends Record<string, unknown>">
+<script setup lang="ts" generic="TColumns, R">
 import {
   type IVoTable,
   type Columns,
+  type Row,
   type Rows,
   VoTableHeader,
   VoTableRow,
@@ -9,20 +10,49 @@ import {
   VoTableCell,
 } from '@/components/VoTable';
 
-type Component = IVoTable<TColumns>;
+import { isEqual } from 'lodash-es';
+
+type Component = IVoTable<TColumns, R>;
 
 const props = withDefaults(defineProps<Component['Props']>(), {
   columns: () => ({}) as Columns<TColumns>,
   rows: () => [] as Rows<TColumns>,
   selectable: false,
+  selector: (row: Row<TColumns>) => row as R,
+});
+
+const selected = defineModel<R[]>('selected', {
+  required: false,
+  default: () => [],
 });
 
 defineSlots<Component['Slots']>();
+
+function select(row: Row<TColumns>): void {
+  const payload: R = props.selector(row);
+
+  const value = selected.value.find((item) => isEqual(item, payload));
+
+  if (value) {
+    selected.value = selected.value.filter((item) => !isEqual(item, payload));
+  } else {
+    selected.value = [...selected.value, payload];
+  }
+}
+
+function isSelected(row: Row<TColumns>): boolean {
+  const payload: R = props.selector(row);
+  return selected.value.some((item) => isEqual(item, payload));
+}
 </script>
 
 <template>
   <table>
     <VoTableHeader>
+      <VoTableCell v-if="props.selectable">
+        <!-- Just a placeholder for an extra column ;)  -->
+      </VoTableCell>
+
       <slot name="header">
         <VoTableCell v-for="(column, index) in props.columns" :key="index">
           {{ column.title }}
@@ -32,11 +62,12 @@ defineSlots<Component['Slots']>();
 
     <VoTableBody>
       <VoTableRow v-for="(row, index) in props.rows" :key="index">
+        <VoTableCell v-if="props.selectable">
+          <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
+        </VoTableCell>
+
         <VoTableCell v-for="(_, name) in props.columns" :key="name">
-          <slot
-            :name="`column[${name as string}]` as keyof Component['Slots']"
-            :row="row"
-          >
+          <slot :name="`column[${name as string}]` as keyof Component['Slots']" :row="row">
             {{ row[name as keyof typeof row] }}
           </slot>
         </VoTableCell>

@@ -1,10 +1,11 @@
 import { type VNode } from 'vue';
 
-export type IVoTable<TColumns> = {
+export type IVoTable<TColumns, R = Row<TColumns>> = {
   Props: {
     columns?: Columns<TColumns>;
     rows?: Rows<TColumns>;
     selectable?: boolean;
+    selector?: (row: Row<TColumns>) => R;
   };
 
   Slots: {
