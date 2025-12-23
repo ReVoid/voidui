@@ -39,7 +39,10 @@ function select(row: Row<TColumns>): void {
   if (value) {
     selected.value = selected.value.filter((item) => !isEqual(item, payload));
   } else {
-    selected.value = [...selected.value, payload];
+    selected.value = [
+      ...selected.value,
+      payload,
+    ];
   }
 }
 
@@ -55,6 +58,11 @@ const columns = computed<Columns<TColumns>>(() => {
 
   return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>;
 });
+
+// TODO: Optimize
+function rowKey(row: Row<TColumns>): string {
+  return JSON.stringify(row);
+}
 </script>
 
 <template>
@@ -65,14 +73,20 @@ const columns = computed<Columns<TColumns>>(() => {
       </VoTableCell>
 
       <slot name="header">
-        <VoTableCell v-for="(column, index) in columns" :key="index">
+        <VoTableCell
+          v-for="(column, index) in columns"
+          :key="index"
+        >
           {{ column.title }}
         </VoTableCell>
       </slot>
     </VoTableHeader>
 
     <VoTableBody>
-      <VoTableRow v-for="(row, index) in props.rows" :key="index">
+      <VoTableRow
+        v-for="row in props.rows"
+        :key="rowKey(row)"
+      >
         <VoTableCell v-if="props.selectable">
           <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
