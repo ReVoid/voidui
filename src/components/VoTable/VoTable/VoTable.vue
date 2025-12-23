@@ -31,18 +31,22 @@ const selected = defineModel<R[]>('selected', {
 
 defineSlots<Component['Slots']>();
 
-function select(row: Row<TColumns>): void {
-  const payload: R = props.selector(row);
-
-  const value = selected.value.find((item) => isEqual(item, payload));
-
-  if (value) {
-    selected.value = selected.value.filter((item) => !isEqual(item, payload));
+function select(rows: Rows<TColumns>): void;
+function select(rows: Row<TColumns> | Rows<TColumns>): void {
+  if (Array.isArray(rows)) {
+    const payload: R[] = rows.map(props.selector);
+    // TODO: Implement
+    throw new Error('select(array) is not implemented!');
   } else {
-    selected.value = [
-      ...selected.value,
-      payload,
-    ];
+    const payload: R = props.selector(rows);
+
+    const value = selected.value.find((item) => isEqual(item, payload));
+
+    if (value) {
+      selected.value = selected.value.filter((item) => !isEqual(item, payload));
+    } else {
+      selected.value = [...selected.value, payload];
+    }
   }
 }
 
@@ -73,20 +77,14 @@ function rowKey(row: Row<TColumns>): string {
       </VoTableCell>
 
       <slot name="header">
-        <VoTableCell
-          v-for="(column, index) in columns"
-          :key="index"
-        >
+        <VoTableCell v-for="(column, index) in columns" :key="index">
           {{ column.title }}
         </VoTableCell>
       </slot>
     </VoTableHeader>
 
     <VoTableBody>
-      <VoTableRow
-        v-for="row in props.rows"
-        :key="rowKey(row)"
-      >
+      <VoTableRow v-for="row in props.rows" :key="rowKey(row)">
         <VoTableCell v-if="props.selectable">
           <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
