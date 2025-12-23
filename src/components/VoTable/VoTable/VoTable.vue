@@ -1,4 +1,6 @@
 <script setup lang="ts" generic="TColumns, R">
+import { computed } from 'vue';
+
 import {
   type IVoTable,
   type Columns,
@@ -10,12 +12,13 @@ import {
   VoTableCell,
 } from '@/components/VoTable';
 
-import { isEqual } from 'lodash-es';
+import { isEqual, pick } from 'lodash-es';
 
 type Component = IVoTable<TColumns, R>;
 
 const props = withDefaults(defineProps<Component['Props']>(), {
   columns: () => ({}) as Columns<TColumns>,
+  columnsOrder: () => [],
   rows: () => [] as Rows<TColumns>,
   selectable: false,
   selector: (row: Row<TColumns>) => row as R,
@@ -44,6 +47,14 @@ function isSelected(row: Row<TColumns>): boolean {
   const payload: R = props.selector(row);
   return selected.value.some((item) => isEqual(item, payload));
 }
+
+const columns = computed<Columns<TColumns>>(() => {
+  if (!props.columnsOrder.length) {
+    return props.columns;
+  }
+
+  return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>;
+});
 </script>
 
 <template>
@@ -54,7 +65,7 @@ function isSelected(row: Row<TColumns>): boolean {
       </VoTableCell>
 
       <slot name="header">
-        <VoTableCell v-for="(column, index) in props.columns" :key="index">
+        <VoTableCell v-for="(column, index) in columns" :key="index">
           {{ column.title }}
         </VoTableCell>
       </slot>
@@ -66,7 +77,7 @@ function isSelected(row: Row<TColumns>): boolean {
           <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
 
-        <VoTableCell v-for="(_, name) in props.columns" :key="name">
+        <VoTableCell v-for="(_, name) in columns" :key="name">
           <slot :name="`column[${name as string}]` as keyof Component['Slots']" :row="row">
             {{ row[name as keyof typeof row] }}
           </slot>

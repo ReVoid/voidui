@@ -3,6 +3,7 @@ import { type VNode } from 'vue';
 export type IVoTable<TColumns, R = Row<TColumns>> = {
   Props: {
     columns?: Columns<TColumns>;
+    columnsOrder?: (keyof Columns<TColumns>)[];
     rows?: Rows<TColumns>;
     selectable?: boolean;
     selector?: (row: Row<TColumns>) => R;

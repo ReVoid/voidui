@@ -44,6 +44,7 @@ const selected = ref<string[]>([]);
     <VoTable
       v-model:selected="selected"
       :columns="columns"
+      :columns-order="['age', 'name']"
       :rows="rows"
       selectable
       :selector="(row) => row.name"
