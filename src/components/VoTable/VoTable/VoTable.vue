@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<Component['Props']>(), {
   rowsOrder: () => [] as unknown as RowsOrder<TColumns>,
   selectable: false,
   selector: (row: Row<TColumns>) => row as R,
+  loading: false,
 });
 
 const selected = defineModel<Component['Models']['selected']>('selected', {
@@ -102,7 +103,7 @@ function rowKey(row: Row<TColumns>): string {
 </script>
 
 <template>
-  <table>
+  <table class="vo-table">
     <VoTableHeader>
       <VoTableCell v-if="props.selectable">
         <!-- Just a placeholder for an extra column ;)  -->
@@ -130,3 +131,8 @@ function rowKey(row: Row<TColumns>): string {
     </VoTableBody>
   </table>
 </template>
+
+<style lang="scss">
+.vo-table {
+}
+</style>

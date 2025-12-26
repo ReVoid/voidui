@@ -2,7 +2,7 @@ import { type VNode } from 'vue';
 
 export type IVoTable<TColumns, R = Row<TColumns>> = {
   Models: {
-    selected?: R[],
+    selected: R[],
   };
 
   Props: {
@@ -12,6 +12,7 @@ export type IVoTable<TColumns, R = Row<TColumns>> = {
     rowsOrder?: RowsOrder<TColumns>;
     selectable?: boolean;
     selector?: (row: Row<TColumns>) => R;
+    loading?: boolean;
   };
 
   Emits: {

@@ -1,4 +1,4 @@
-type SizeToken = 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge'
+type Variant = 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge'
 
 type SizeUnit = number | `${number}${'px' | '%' | 'em' | 'vh' | 'vw'}` | 'auto';
 
@@ -7,6 +7,6 @@ type SizeValue = {
   height: SizeUnit;
 };
 
-export interface ISize<T extends SizeToken> {
+export interface ISize<T extends Variant = never> {
   size?: T | SizeValue;
 }
