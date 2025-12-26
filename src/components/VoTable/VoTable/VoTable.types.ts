@@ -3,8 +3,9 @@ import { type VNode } from 'vue';
 export type IVoTable<TColumns, R = Row<TColumns>> = {
   Props: {
     columns?: Columns<TColumns>;
-    columnsOrder?: (keyof Columns<TColumns>)[];
+    columnsOrder?: ColumnsOrder<TColumns>;
     rows?: Rows<TColumns>;
+    rowsOrder?: RowsOrder<TColumns>;
     selectable?: boolean;
     selector?: (row: Row<TColumns>) => R;
   };
@@ -36,3 +37,11 @@ export type Rows<T> = Row<T>[];
 type RowColumnSlots<TColumns> = {
   [K in keyof TColumns as `column[${Extract<K, string>}]`]: (props: { row: Row<TColumns> }) => VNode[];
 };
+
+type SortDirection = 'asc' | 'desc';
+type SortOrder<T extends Record<string, unknown>> = `${Extract<keyof T, string>}:${SortDirection}`
+export type RowsOrder<T> = T extends Record<string, unknown>
+  ? SortOrder<T>[]
+  : never;
+
+export type ColumnsOrder<TColumns> = Array<keyof Columns<TColumns>>;

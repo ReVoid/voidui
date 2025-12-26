@@ -4,22 +4,25 @@ import { computed } from 'vue';
 import {
   type IVoTable,
   type Columns,
+  type ColumnsOrder,
   type Row,
   type Rows,
+  type RowsOrder,
   VoTableHeader,
   VoTableRow,
   VoTableBody,
   VoTableCell,
 } from '@/components/VoTable';
 
-import { isEqual, pick } from 'lodash-es';
+import { isEqual, pick, orderBy } from 'lodash-es';
 
 type Component = IVoTable<TColumns, R>;
 
 const props = withDefaults(defineProps<Component['Props']>(), {
   columns: () => ({}) as Columns<TColumns>,
-  columnsOrder: () => [],
+  columnsOrder: () => [] as ColumnsOrder<TColumns>,
   rows: () => [] as Rows<TColumns>,
+  rowsOrder: () => [] as unknown as RowsOrder<TColumns>,
   selectable: false,
   selector: (row: Row<TColumns>) => row as R,
 });
@@ -31,7 +34,33 @@ const selected = defineModel<R[]>('selected', {
 
 defineSlots<Component['Slots']>();
 
-function select(rows: Rows<TColumns>): void;
+const rows = computed<typeof props.rows>(() => {
+  type Orders = {
+    names: string[];
+    directions: string[];
+  };
+
+  const ORDERS_BLANK: Orders = {
+    names: [],
+    directions: [],
+  };
+
+  const orders = props.rowsOrder.reduce((accum, value) => {
+    const [name, direction] = value.split(':');
+
+    if (!name || !direction) {
+      return accum;
+    }
+    // TODO: Remove duplicates
+    return {
+      names: [...accum.names, name],
+      directions: [...accum.directions, direction],
+    };
+  }, ORDERS_BLANK);
+
+  return orderBy(props.rows, orders.names, orders.directions as never);
+});
+
 function select(rows: Row<TColumns> | Rows<TColumns>): void {
   if (Array.isArray(rows)) {
     const payload: R[] = rows.map(props.selector);
@@ -84,7 +113,7 @@ function rowKey(row: Row<TColumns>): string {
     </VoTableHeader>
 
     <VoTableBody>
-      <VoTableRow v-for="row in props.rows" :key="rowKey(row)">
+      <VoTableRow v-for="row in rows" :key="rowKey(row)">
         <VoTableCell v-if="props.selectable">
           <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
