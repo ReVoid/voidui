@@ -16,7 +16,10 @@ function onClick() {
 
     <input v-model="isDisabled" type="checkbox" />
 
-    <VoButton @click="onClick">
+    <VoButton
+      :disabled="isDisabled"
+      @click="onClick"
+    >
       Click me
     </VoButton>
   </article>

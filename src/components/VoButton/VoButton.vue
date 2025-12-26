@@ -17,12 +17,14 @@ const props = withDefaults(defineProps<Component['Props']>(), {
 
 const emit = defineEmits<Component['Emits']>();
 
-const isAActive = computed(() => {
+const isActive = computed(() => {
   return !props.disabled && !props.loading;
 });
 
-function onClick(): void {
-  if (isAActive.value) {
+function onClick(e: PointerEvent): void {
+  e.preventDefault();
+
+  if (!isActive.value) {
     return;
   }
 
