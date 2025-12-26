@@ -1,6 +1,10 @@
 import { type VNode } from 'vue';
 
 export type IVoTable<TColumns, R = Row<TColumns>> = {
+  Models: {
+    selected?: R[],
+  };
+
   Props: {
     columns?: Columns<TColumns>;
     columnsOrder?: ColumnsOrder<TColumns>;
@@ -9,6 +13,10 @@ export type IVoTable<TColumns, R = Row<TColumns>> = {
     selectable?: boolean;
     selector?: (row: Row<TColumns>) => R;
   };
+
+  Emits: {
+    'update:selected': [payload: R[]];
+  }
 
   Slots: {
     default?: () => VNode[];
@@ -25,7 +33,7 @@ type ColumnOptions = {
 };
 
 export type Columns<T> = T extends Record<string, unknown>
-  ? { [K in keyof T]: ColumnOptions }
+  ? Record<keyof T, ColumnOptions>
   : never;
 
 export type Row<T> = T extends Record<string, unknown>

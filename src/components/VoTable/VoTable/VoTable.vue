@@ -27,12 +27,23 @@ const props = withDefaults(defineProps<Component['Props']>(), {
   selector: (row: Row<TColumns>) => row as R,
 });
 
-const selected = defineModel<R[]>('selected', {
+const selected = defineModel<Component['Models']['selected']>('selected', {
   required: false,
   default: () => [],
 });
 
+defineEmits<Component['Emits']>();
+
 defineSlots<Component['Slots']>();
+
+// TODO: Implement column visibility
+const columns = computed<Columns<TColumns>>(() => {
+  if (!props.columnsOrder.length) {
+    return props.columns;
+  }
+
+  return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>;
+});
 
 const rows = computed<typeof props.rows>(() => {
   type Orders = {
@@ -83,14 +94,6 @@ function isSelected(row: Row<TColumns>): boolean {
   const payload: R = props.selector(row);
   return selected.value.some((item) => isEqual(item, payload));
 }
-
-const columns = computed<Columns<TColumns>>(() => {
-  if (!props.columnsOrder.length) {
-    return props.columns;
-  }
-
-  return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>;
-});
 
 // TODO: Optimize
 function rowKey(row: Row<TColumns>): string {
