@@ -3,6 +3,7 @@ import { VoDialogStory } from '@/components/VoDialog/stories';
 import { VoTableStory } from '@/components/VoTable/stories';
 import { VoInputStory } from '@/components/VoInput/stories';
 import { VoButtonStory } from '@/components/VoButton/stories';
+import { VoSelectStory} from '@/components/VoSelect/stories';
 </script>
 
 <template>
@@ -10,5 +11,6 @@ import { VoButtonStory } from '@/components/VoButton/stories';
   <VoDialogStory />
   <VoTableStory />
   <VoInputStory />
-  <VoButtonStory />
+  <VoButtonStory v-if="false"/>
+  <VoSelectStory />
 </template>
