@@ -18,6 +18,7 @@ function onClick() {
 
     <VoButton
       :disabled="isDisabled"
+      to="/"
       @click="onClick"
     >
       Click me

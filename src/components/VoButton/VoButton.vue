@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { type IVoButton } from './VoButton.types.ts';
+import { useLink, useRouter } from 'vue-router';
 
+import { type IVoButton } from './VoButton.types.ts';
 
 defineOptions({
   inheritAttrs: false,
@@ -21,6 +22,24 @@ const isActive = computed(() => {
   return !props.disabled && !props.loading;
 });
 
+type Tag = keyof Pick<HTMLElementTagNameMap, 'button' | 'a'>;
+
+const tag = computed<Tag>(() => {
+  return props.to ? 'a' : 'button';
+});
+
+const navigation = computed(() => {
+  if (props.to) {
+    const router = useRouter();
+
+    return {
+      href: router.resolve(props.to).href,
+    };
+  }
+
+  return {};
+});
+
 function onClick(e: PointerEvent): void {
   e.preventDefault();
 
@@ -28,25 +47,33 @@ function onClick(e: PointerEvent): void {
     return;
   }
 
+  if (props.to) {
+    useLink({
+      to: props.to,
+    }).navigate();
+  }
+
   emit('click');
 }
 </script>
 
 <template>
-  <button
+  <Component
+    :is="tag"
     class="vo-button"
     :class="[
       props.class,
       {
-        'disabled': props.disabled,
-        'loading': props.loading,
+        disabled: props.disabled,
+        loading: props.loading,
       },
     ]"
+    :href="navigation.href"
     :disabled="props.disabled"
     @click="onClick"
   >
     <slot name="default" />
-  </button>
+  </Component>
 </template>
 
 <style scoped lang="scss">
