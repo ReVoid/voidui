@@ -8,8 +8,12 @@ type Component = IVoInput<T>;
 
 type Props = Component['Props'];
 
-const props = defineProps<Component['Props']>()
-const text = defineModel<Props['text']>();
+const props = defineProps<Component['Props']>();
+
+const text = defineModel<Props['text']>('text', {
+  required: false,
+  default: undefined,
+});
 
 type Meta = {
   type: 'text' | 'number';
