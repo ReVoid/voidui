@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { IVoIcon } from './index.ts';
+import { computed, getCurrentInstance } from 'vue';
 
 defineOptions({
-  inheritAttrs: true,
+  inheritAttrs: false,
 });
 
 type Component = IVoIcon;
@@ -15,6 +16,13 @@ type Emits = Component['Emits'];
 
 const emit = defineEmits<Emits>();
 
+const tag = computed<'i' | 'button'>(() => {
+  const instance = getCurrentInstance();
+  const hasClickHandler: boolean = instance?.vnode?.props?.onClick !== undefined;
+
+  return hasClickHandler ? 'button' : 'i';
+});
+
 function onClick(e: PointerEvent) {
   e.preventDefault();
   emit('click');
@@ -22,9 +30,9 @@ function onClick(e: PointerEvent) {
 </script>
 
 <template>
-  <i @click="onClick">
-    <!-- Something is coming! -->
-  </i>
+  <Component :is="tag" @click="onClick">
+    <slot name="default" />
+  </Component>
 </template>
 
 <style scoped lang="scss"></style>
