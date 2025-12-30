@@ -1,15 +1,14 @@
-<script setup lang="ts" generic="T, TNonNullable">
+<script setup lang="ts" generic="T">
 import { computed, useId } from 'vue';
 
 import { isNumber } from '@sniptt/guards';
 import type { IVoInput } from '@/components/VoInput/VoInput.types.ts';
 
-type Component = IVoInput<T, TNonNullable>;
+type Component = IVoInput<T>;
 
 type Props = Component['Props'];
 
-const props = defineProps<Component['Props']>();
-
+const props = defineProps<Component['Props']>()
 const text = defineModel<Props['text']>();
 
 type Meta = {

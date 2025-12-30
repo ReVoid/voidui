@@ -1,16 +1,16 @@
 import type { IClassNames, ILoading } from '@/components/compositions';
 
-export interface IVoInput<T, TNonNullable> {
+export interface IVoInput<T> {
   Props: {
-    nonNullable?: TNonNullable;
-  } & Text<T, TNonNullable>
+  } & Text<T>
     & IClassNames
     & ILoading;
 }
 
 
-type Text<T, TNonNullable> = TNonNullable extends true
-  ? { text: NonNullable<T> }
-  : T extends NonNullable<T>
-    ? { text?: T }
-    : { text: T };
+// This is currently the only known workaround for conditional type restrictions in Vue.
+// See: https://github.com/vuejs/core/issues/11371
+type Text<T> =
+  | { text: NonNullable<T>, nonNullable: true }
+  | { text?: T | undefined, nonNullable?: false };
+
