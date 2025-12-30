@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number, TNonNullable extends boolean | undefined">
+<script setup lang="ts" generic="T, TNonNullable">
 import { computed, useId } from 'vue';
 
 import { isNumber } from '@sniptt/guards';

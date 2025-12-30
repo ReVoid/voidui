@@ -12,5 +12,5 @@ export interface IVoInput<T, TNonNullable> {
 type Text<T, TNonNullable> = TNonNullable extends true
   ? { text: NonNullable<T> }
   : T extends NonNullable<T>
-    ? { text?: T | undefined }
+    ? { text?: T }
     : { text: T };

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 import { VoInput } from '@/components/VoInput';
 
-const text = ref<string>('');
+const text = ref<string>();
 </script>
 
 <template>
