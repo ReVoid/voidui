@@ -7,7 +7,7 @@ const text = ref<string>('');
 </script>
 
 <template>
-  <VoInput :text="text" />
+  <VoInput v-model:text="text" non-nullable />
 </template>
 
 <style scoped lang="scss"></style>

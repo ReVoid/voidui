@@ -1,26 +1,16 @@
-<script
-  setup
-  lang="ts"
-  generic="
-    T extends string | number
-  "
->
+<script setup lang="ts" generic="T extends string | number, TNonNullable extends boolean | undefined">
 import { computed, useId } from 'vue';
 
 import { isNumber } from '@sniptt/guards';
+import type { IVoInput } from '@/components/VoInput/VoInput.types.ts';
 
-type Props = {
-  nonNullable?: boolean;
-};
+type Component = IVoInput<T, TNonNullable>;
 
-const props = withDefaults(defineProps<Props>(), {
-  nonNullable: false,
-});
+type Props = Component['Props'];
 
-const text = defineModel<T>('text', {
-  required: false,
-  default: undefined,
-});
+const props = defineProps<Component['Props']>();
+
+const text = defineModel<Props['text']>();
 
 type Meta = {
   type: 'text' | 'number';
@@ -38,8 +28,6 @@ const id = useId();
 </script>
 
 <template>
-  <label :for="id">
-    Whatever
-  </label>
-  <input v-model="text" :type="meta.type" :id="id" />
+  <label :for="id"> Whatever </label>
+  <input :type="meta.type" :id="id" />
 </template>
