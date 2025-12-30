@@ -1,10 +1,11 @@
-import type { IClassNames, ILoading } from '@/components/compositions';
+import type { IClassNames, ILoading, IControl } from '@/components/compositions';
 
 export interface IVoInput<T> {
   Props: {
   } & Text<T>
     & IClassNames
-    & ILoading;
+    & ILoading
+    & IControl;
 }
 
 
@@ -13,4 +14,3 @@ export interface IVoInput<T> {
 type Text<T> =
   | { text: NonNullable<T>, nonNullable: true }
   | { text?: T | undefined, nonNullable?: false };
-
