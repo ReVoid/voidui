@@ -29,7 +29,7 @@ const dialog_3 = ref<boolean>(false);
       </label>
     </div>
 
-    <VoDialog v-model:visible="dialog_1" closable :size="{ width: '500px', height: '300px'}">
+    <VoDialog v-model:visible="dialog_1" closable>
       Dialog 1
 
       <template #footer="{ close, submit }">
@@ -42,11 +42,11 @@ const dialog_3 = ref<boolean>(false);
       </template>
     </VoDialog>
 
-    <VoDialog v-model:visible="dialog_2">
+    <VoDialog v-model:visible="dialog_2" closable>
       Dialog 2
     </VoDialog>
 
-    <VoDialog v-model:visible="dialog_3" >
+    <VoDialog v-model:visible="dialog_3" closable>
       Dialog 3
     </VoDialog>
   </article>
