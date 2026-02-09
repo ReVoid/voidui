@@ -1,5 +1,7 @@
 <script setup lang="ts" generic="TColumns, R">
-import { computed } from 'vue';
+import {
+  computed,
+} from 'vue';
 
 import {
   type IVoTable,
@@ -14,7 +16,11 @@ import {
   VoTableCell,
 } from '@/components/VoTable';
 
-import { isEqual, pick, orderBy } from 'lodash-es';
+import {
+  isEqual,
+  pick,
+  orderBy,
+} from 'lodash-es';
 
 type Component = IVoTable<TColumns, R>;
 
@@ -43,7 +49,7 @@ const columns = computed<Columns<TColumns>>(() => {
     return props.columns;
   }
 
-  return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>;
+  return pick(props.columns, props.columnsOrder) as unknown as Columns<TColumns>; // TODO: Get rid of as
 });
 
 const rows = computed<typeof props.rows>(() => {
@@ -70,7 +76,7 @@ const rows = computed<typeof props.rows>(() => {
     };
   }, ORDERS_BLANK);
 
-  return orderBy(props.rows, orders.names, orders.directions as never);
+  return orderBy(props.rows, orders.names, orders.directions as never); // TODO: Get rid of never
 });
 
 function select(rows: Row<TColumns> | Rows<TColumns>): void {

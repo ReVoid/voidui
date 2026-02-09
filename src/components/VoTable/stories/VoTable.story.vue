@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {
+  ref,
+} from 'vue';
 
-import { type IVoTable, VoTable } from '@/components/';
+import {
+  type IVoTable,
+  VoTable,
+} from '@/components/';
 
 type Person = {
   name: string;
@@ -66,7 +71,9 @@ const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
         {{ row.name }}
       </template>
 
-      <template #column[age]="{ row }"> {{ row.age }} years </template>
+      <template #column[age]="{ row }">
+        {{ row.age }} years
+      </template>
     </VoTable>
   </article>
 </template>
