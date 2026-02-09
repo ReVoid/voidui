@@ -23,6 +23,7 @@ const columns: Component['Props']['columns'] = {
   age: {
     title: 'Age',
     width: 100,
+    pinned: true, // Not implemented yet
   },
 };
 

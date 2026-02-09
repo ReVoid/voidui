@@ -31,6 +31,7 @@ type Unit = 'px';
 type ColumnOptions = {
   title?: string;
   width?: number | `${number}` | `${number}${Unit}`;
+  pinned?: boolean;
 };
 
 export type Columns<T> = T extends Record<string, unknown>
