@@ -20,7 +20,12 @@ import {
   isEqual,
   pick,
   orderBy,
+  xorWith,
 } from 'lodash-es';
+
+import {
+  isArray,
+} from '@sniptt/guards';
 
 type Component = IVoTable<TColumns, R>;
 
@@ -80,21 +85,11 @@ const rows = computed<typeof props.rows>(() => {
 });
 
 function select(rows: Row<TColumns> | Rows<TColumns>): void {
-  if (Array.isArray(rows)) {
-    const payload: R[] = rows.map(props.selector);
-    // TODO: Implement
-    throw new Error('select(array) is not implemented!');
-  } else {
-    const payload: R = props.selector(rows);
+  const payload: R[] = isArray(rows)
+    ? rows.map(props.selector)
+    : [props.selector(rows)];
 
-    const value = selected.value.find((item) => isEqual(item, payload));
-
-    if (value) {
-      selected.value = selected.value.filter((item) => !isEqual(item, payload));
-    } else {
-      selected.value = [...selected.value, payload];
-    }
-  }
+  selected.value = xorWith(selected.value, payload, isEqual);
 }
 
 function isSelected(row: Row<TColumns>): boolean {
