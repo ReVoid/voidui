@@ -1,4 +1,5 @@
+import { defineFormat } from './defineFormat.ts';
+
 // TODO: Implement
-export function numeric() {
-  throw new Error('format is not implemented');
-}
+// This is just a placeholder.
+export const numeric = defineFormat((value: number) => `${value}`);

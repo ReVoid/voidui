@@ -1,3 +1,5 @@
+export { defineFormat } from './defineFormat.ts'
+
 // numbers
 export * from './numeric.ts';
 export * from './currency.ts';
