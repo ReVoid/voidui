@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { VoTableRow } from '@/components';
+import {
+  VoTableRow,
+} from '../VoTableRow';
 </script>
 
 <template>

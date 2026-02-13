@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="TColumns, R">
+<script setup lang="ts" generic="TColumns extends Record<string, unknown>, R = TColumns">
 import {
   computed,
 } from 'vue';
@@ -7,14 +7,12 @@ import {
   type IVoTable,
   type Columns,
   type ColumnsOrder,
-  type Row,
-  type Rows,
   type RowsOrder,
   VoTableHeader,
   VoTableRow,
   VoTableBody,
   VoTableCell,
-} from '@/components/VoTable';
+} from '../index';
 
 import {
   isEqual,
@@ -32,10 +30,10 @@ type Component = IVoTable<TColumns, R>;
 const props = withDefaults(defineProps<Component['Props']>(), {
   columns: () => ({}) as Columns<TColumns>,
   columnsOrder: () => [] as ColumnsOrder<TColumns>,
-  rows: () => [] as Rows<TColumns>,
+  rows: () => [] as TColumns[],
   rowsOrder: () => [] as unknown as RowsOrder<TColumns>,
   selectable: false,
-  selector: (row: Row<TColumns>) => row as R,
+  selector: (row: TColumns) => row as unknown as R,
   loading: false,
 });
 
@@ -74,6 +72,7 @@ const rows = computed<typeof props.rows>(() => {
     if (!name || !direction) {
       return accum;
     }
+
     // TODO: Remove duplicates
     return {
       names: [...accum.names, name],
@@ -81,10 +80,10 @@ const rows = computed<typeof props.rows>(() => {
     };
   }, ORDERS_BLANK);
 
-  return orderBy(props.rows, orders.names, orders.directions as never); // TODO: Get rid of never
+  return orderBy(props.rows, orders.names, orders.directions as never[]); // TODO: Get rid of never
 });
 
-function select(rows: Row<TColumns> | Rows<TColumns>): void {
+function select(rows: TColumns | TColumns[]): void {
   const payload: R[] = isArray(rows)
     ? rows.map(props.selector)
     : [props.selector(rows)];
@@ -92,13 +91,13 @@ function select(rows: Row<TColumns> | Rows<TColumns>): void {
   selected.value = xorWith(selected.value, payload, isEqual);
 }
 
-function isSelected(row: Row<TColumns>): boolean {
+function isSelected(row: TColumns): boolean {
   const payload: R = props.selector(row);
   return selected.value.some((item) => isEqual(item, payload));
 }
 
 // TODO: Optimize
-function rowKey(row: Row<TColumns>): string {
+function rowKey(row: TColumns): string {
   return JSON.stringify(row);
 }
 </script>
@@ -111,7 +110,7 @@ function rowKey(row: Row<TColumns>): string {
       </VoTableCell>
 
       <slot name="header">
-        <VoTableCell v-for="(column, index) in columns" :key="index">
+        <VoTableCell v-for="(column, name) in columns" :key="name">
           {{ column.title }}
         </VoTableCell>
       </slot>

@@ -44,7 +44,12 @@ const rows: Component['Props']['rows'] = [
 
 const selected = ref<string[]>([]);
 
-const ROWS_ORDERS_OPTIONS: Component['Props']['rowsOrder'] = ['name:asc', 'name:desc', 'age:asc', 'age:desc'];
+const ROWS_ORDERS_OPTIONS: Component['Props']['rowsOrder'] = [
+  'name:asc',
+  'name:desc',
+  'age:asc',
+  'age:desc',
+];
 
 const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
 </script>
@@ -63,16 +68,16 @@ const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
       v-model:selected="selected"
       :columns="columns"
       :columns-order="['age', 'name']"
-      :rows-order="rowOrders"
       :rows="rows"
+      :rows-order="rowOrders"
       selectable
       :selector="(row) => row.name"
     >
-      <template #column[name]="{ row }">
+      <template #row[name]="{ row }">
         {{ row.name }}
       </template>
 
-      <template #column[age]="{ row }">
+      <template #row[age]="{ row }">
         {{ row.age }} years
       </template>
     </VoTable>

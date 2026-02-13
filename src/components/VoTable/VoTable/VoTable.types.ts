@@ -1,6 +1,8 @@
-import { type VNode } from 'vue';
+import {
+  type VNode,
+} from 'vue';
 
-export type IVoTable<TColumns, R = Row<TColumns>> = {
+export type IVoTable<TColumns, R = TColumns> = {
   Models: {
     selected: R[],
   };
@@ -8,10 +10,10 @@ export type IVoTable<TColumns, R = Row<TColumns>> = {
   Props: {
     columns?: Columns<TColumns>;
     columnsOrder?: ColumnsOrder<TColumns>;
-    rows?: Rows<TColumns>;
+    rows?: TColumns[];
     rowsOrder?: RowsOrder<TColumns>;
     selectable?: boolean;
-    selector?: (row: Row<TColumns>) => R;
+    selector?: (row: TColumns) => R;
     loading?: boolean;
   };
 
@@ -38,14 +40,8 @@ export type Columns<T> = T extends Record<string, unknown>
   ? Record<keyof T, ColumnOptions>
   : never;
 
-export type Row<T> = T extends Record<string, unknown>
-  ? { [K in keyof T]: T[K] }
-  : never;
-
-export type Rows<T> = Row<T>[];
-
 type RowColumnSlots<TColumns> = {
-  [K in keyof TColumns as `column[${Extract<K, string>}]`]: (props: { row: Row<TColumns> }) => VNode[];
+  [K in keyof TColumns as `row[${Extract<K, string>}]`]: (props: { row: TColumns }) => VNode[];
 };
 
 type SortDirection = 'asc' | 'desc';
