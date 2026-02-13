@@ -4,7 +4,7 @@ import {
 
 export type IVoTable<TColumns, R = TColumns> = {
   Models: {
-    selected: R[],
+    selected: R[];
   };
 
   Props: {
@@ -19,14 +19,13 @@ export type IVoTable<TColumns, R = TColumns> = {
 
   Emits: {
     'update:selected': [payload: R[]];
-  }
+  };
 
   Slots: {
-    default?: () => VNode[];
     header?: () => VNode[];
-    row?: () => VNode[];
-  } & HeaderSlots<TColumns>
-    & RowSlots<TColumns>;
+    default?: () => VNode[];
+  } & HeaderSlots<TColumns> &
+    RowSlots<TColumns>;
 };
 
 type Unit = 'px';

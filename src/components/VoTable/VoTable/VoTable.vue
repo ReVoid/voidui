@@ -7,8 +7,9 @@ import {
   type ColumnsOrder,
   type RowsOrder,
   VoTableHeader,
-  VoTableRow,
   VoTableBody,
+  VoTableFooter,
+  VoTableRow,
   VoTableCell,
   VoTablePlaceholder,
 } from '../index';
@@ -99,8 +100,14 @@ function rowKey(row: TColumns): string {
         <!-- Just a placeholder for an extra column ;)  -->
       </VoTableCell>
 
-      <VoTableCell v-for="(column, name) in columns" :key="name">
-        <slot :name="`header[${name as string}]` as keyof Component['Slots']" :header="column">
+      <VoTableCell
+        v-for="(column, name) in columns"
+        :key="name"
+      >
+        <slot
+          :name="`header[${name as string}]` as keyof Component['Slots']"
+          :header="column"
+        >
           {{ column.title }}
         </slot>
       </VoTableCell>
@@ -112,11 +119,21 @@ function rowKey(row: TColumns): string {
         :key="rowKey(row)"
       >
         <VoTableCell v-if="props.selectable">
-          <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
+          <input
+            :checked="isSelected(row)"
+            type="checkbox"
+            @change="select(row)"
+          />
         </VoTableCell>
 
-        <VoTableCell v-for="(_, name) in columns" :key="name">
-          <slot :name="`column[${name as string}]` as keyof Component['Slots']" :row="row">
+        <VoTableCell
+          v-for="(_, name) in columns"
+          :key="name"
+        >
+          <slot
+            :name="`row[${name as string}]` as keyof Component['Slots']"
+            :row="row"
+          >
             {{ row[name as keyof typeof row] }}
           </slot>
         </VoTableCell>
@@ -128,6 +145,17 @@ function rowKey(row: TColumns): string {
         No data
       </VoTablePlaceholder>
     </VoTableBody>
+
+    <VoTableFooter>
+      <VoTableRow>
+        <VoTableCell
+          v-for="(column, name) in columns"
+          :key="name"
+        >
+          {{ name }}
+        </VoTableCell>
+      </VoTableRow>
+    </VoTableFooter>
   </table>
 </template>
 
