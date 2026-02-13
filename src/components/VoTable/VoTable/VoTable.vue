@@ -1,7 +1,5 @@
 <script setup lang="ts" generic="TColumns extends Record<string, unknown>, R = TColumns">
-import {
-  computed,
-} from 'vue';
+import { computed } from 'vue';
 
 import {
   type IVoTable,
@@ -14,16 +12,9 @@ import {
   VoTableCell,
 } from '../index';
 
-import {
-  isEqual,
-  pick,
-  orderBy,
-  xorWith,
-} from 'lodash-es';
+import { isEqual, pick, orderBy, xorWith } from 'lodash-es';
 
-import {
-  isArray,
-} from '@sniptt/guards';
+import { isArray } from '@sniptt/guards';
 
 type Component = IVoTable<TColumns, R>;
 
@@ -84,9 +75,7 @@ const rows = computed<typeof props.rows>(() => {
 });
 
 function select(rows: TColumns | TColumns[]): void {
-  const payload: R[] = isArray(rows)
-    ? rows.map(props.selector)
-    : [props.selector(rows)];
+  const payload: R[] = isArray(rows) ? rows.map(props.selector) : [props.selector(rows)];
 
   selected.value = xorWith(selected.value, payload, isEqual);
 }
@@ -109,11 +98,11 @@ function rowKey(row: TColumns): string {
         <!-- Just a placeholder for an extra column ;)  -->
       </VoTableCell>
 
-      <slot name="header">
-        <VoTableCell v-for="(column, name) in columns" :key="name">
+      <VoTableCell v-for="(column, name) in columns" :key="name">
+        <slot :name="`header[${name as string}]` as keyof Component['Slots']" :header="column">
           {{ column.title }}
-        </VoTableCell>
-      </slot>
+        </slot>
+      </VoTableCell>
     </VoTableHeader>
 
     <VoTableBody>

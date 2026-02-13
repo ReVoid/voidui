@@ -73,6 +73,12 @@ const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
       selectable
       :selector="(row) => row.name"
     >
+      <template #header[name]="{ header }">
+        <strong>
+          {{ header.title }}
+        </strong>
+      </template>
+
       <template #row[name]="{ row }">
         {{ row.name }}
       </template>

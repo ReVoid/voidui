@@ -25,7 +25,8 @@ export type IVoTable<TColumns, R = TColumns> = {
     default?: () => VNode[];
     header?: () => VNode[];
     row?: () => VNode[];
-  } & RowColumnSlots<TColumns>;
+  } & HeaderSlots<TColumns>
+    & RowSlots<TColumns>;
 };
 
 type Unit = 'px';
@@ -40,7 +41,11 @@ export type Columns<T> = T extends Record<string, unknown>
   ? Record<keyof T, ColumnOptions>
   : never;
 
-type RowColumnSlots<TColumns> = {
+type HeaderSlots<TColumns> = {
+  [K in keyof TColumns as `header[${Extract<K, string>}]`]: (props: { header: Columns<TColumns>[K] }) => VNode[];
+};
+
+type RowSlots<TColumns> = {
   [K in keyof TColumns as `row[${Extract<K, string>}]`]: (props: { row: TColumns }) => VNode[];
 };
 
