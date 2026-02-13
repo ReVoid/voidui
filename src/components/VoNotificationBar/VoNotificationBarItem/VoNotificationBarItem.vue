@@ -18,6 +18,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const items = inject<Ref<Props[]>>('VoNotificationBar.items')!;
 
+function dismiss() {
+
+}
+
 onBeforeMount(() => {
   items.value.push(props);
 
@@ -41,6 +45,10 @@ onBeforeMount(() => {
       <p>
         {{ props.message }}
       </p>
+
+      <button @click="dismiss">
+        ╳
+      </button>
     </slot>
   </article>
 </template>
