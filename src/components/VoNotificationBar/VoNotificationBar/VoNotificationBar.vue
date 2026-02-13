@@ -1,26 +1,23 @@
 <script setup lang="ts">
-import { ref, computed, provide } from 'vue';
+import {
+  ref,
+} from 'vue';
 
-import { VoNotificationBarItem, type IVoNotificationBarItem } from '../VoNotificationBarItem';
+import {
+  VoNotificationBarItem,
+  type IVoNotificationBar,
+  type IVoNotificationBarItem,
+} from '.././index.ts';
 
-import { type IVoNotificationBar } from './VoNotificationBar.types.ts';
-
-import { useList } from '@/submodules/voiduse/src/composables';
-
-type Component = IVoNotificationBar;
-
-type Props = Component['Props'];
-
-const props = defineProps<Props>();
-
-const { items } = useList<IVoNotificationBarItem['Props']>();
+// TODO: Design end implement.
+const notifications = ref<IVoNotificationBarItem['Props'][]>([]);
 </script>
 
 <template>
   <article class="vo-notification-bar">
     <slot name="default">
       <VoNotificationBarItem
-        v-for="(item, i) in items"
+        v-for="(item, i) in notifications"
         :key="i"
         :type="item.type"
         :title="item.title"
