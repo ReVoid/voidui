@@ -10,6 +10,7 @@ import {
   VoTableRow,
   VoTableBody,
   VoTableCell,
+  VoTablePlaceholder,
 } from '../index';
 
 import { isEqual, pick, orderBy, xorWith } from 'lodash-es';
@@ -105,8 +106,11 @@ function rowKey(row: TColumns): string {
       </VoTableCell>
     </VoTableHeader>
 
-    <VoTableBody>
-      <VoTableRow v-for="row in rows" :key="rowKey(row)">
+    <VoTableBody v-if="rows.length">
+      <VoTableRow
+        v-for="row in rows"
+        :key="rowKey(row)"
+      >
         <VoTableCell v-if="props.selectable">
           <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
@@ -117,6 +121,12 @@ function rowKey(row: TColumns): string {
           </slot>
         </VoTableCell>
       </VoTableRow>
+    </VoTableBody>
+
+    <VoTableBody v-else>
+      <VoTablePlaceholder>
+        No data
+      </VoTablePlaceholder>
     </VoTableBody>
   </table>
 </template>

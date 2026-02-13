@@ -1,1 +1,1 @@
-export { default } from './VoTablePlaceholder.vue';
+export { default as VoTablePlaceholder } from './VoTablePlaceholder.vue';

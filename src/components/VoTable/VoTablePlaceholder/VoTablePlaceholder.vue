@@ -2,8 +2,8 @@
 
 <template>
   <div>
-    <!-- NoData placeholder-->
+    <slot name="default">
+      No data
+    </slot>
   </div>
 </template>
-
-<style scoped lang="scss"></style>
