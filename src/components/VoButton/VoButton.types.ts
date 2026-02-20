@@ -5,6 +5,7 @@ import type {
   ILoading,
   INavigation,
   ISize,
+  IVariant,
 } from '@/components/compositions';
 
 export interface IVoButton {
@@ -13,7 +14,8 @@ export interface IVoButton {
   } & INavigation
     & ISize
     & IClassNames
-    & ILoading;
+    & ILoading
+    & IVariant<'Regular' | 'Ghost' | 'Outlined'>;
 
   Emits: {
     click: [];

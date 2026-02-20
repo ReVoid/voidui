@@ -14,11 +14,12 @@ type Component = IVoButton;
 const props = withDefaults(defineProps<Component['Props']>(), {
   disabled: false,
   loading: false,
+  variant: 'Regular',
 });
 
 const emit = defineEmits<Component['Emits']>();
 
-const isActive = computed(() => {
+const isActive = computed<boolean>(() => {
   return !props.disabled && !props.loading;
 });
 
@@ -66,6 +67,9 @@ function onClick(e: PointerEvent): void {
       {
         disabled: props.disabled,
         loading: props.loading,
+        regular: props.variant === 'Regular',
+        outlined: props.variant === 'Outlined',
+        ghost: props.variant === 'Ghost',
       },
     ]"
     :href="navigation.href"
@@ -80,6 +84,18 @@ function onClick(e: PointerEvent): void {
 .vo-button {
   cursor: pointer;
   user-select: none;
+
+  &.regular {
+    /* ... */
+  }
+
+  &.outlined {
+    /* ... */
+  }
+
+  &.ghost {
+    /* ... */
+  }
 
   &.disabled {
     pointer-events: none;
