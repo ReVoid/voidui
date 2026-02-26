@@ -6,6 +6,7 @@ import { VoButtonStory } from '@/components/VoButton/stories';
 import { VoSelectStory } from '@/components/VoSelect/stories';
 import { VoIconStory } from '@/components/VoIcon/stories';
 import { VoNotificationBarStory } from '@/components/VoNotificationBar/stories';
+import { VoInputDateStory } from '@/components/input/VoInputDate/stories';
 </script>
 
 <template>
@@ -18,4 +19,5 @@ import { VoNotificationBarStory } from '@/components/VoNotificationBar/stories';
 
   <VoButtonStory v-if="false" />
   <VoNotificationBarStory v-if="false" />
+  <VoInputDateStory />
 </template>
