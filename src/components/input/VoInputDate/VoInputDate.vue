@@ -1,9 +1,12 @@
 <script setup lang="ts" generic="T extends string | Date, M extends boolean">
 
-const date = defineModel<T>('date', {
-  required: false,
-  default: undefined,
-});
+const date = defineModel<T>('date');
+
+const year = defineModel<number>('year');
+
+const month = defineModel<number>('month');
+
+const day = defineModel<number>('day');
 </script>
 
 <template>

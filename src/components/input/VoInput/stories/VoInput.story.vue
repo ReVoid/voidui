@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { VoInput } from '@/components/VoInput';
+import { VoInput } from '@/components/input/VoInput';
 
 const text = ref<string>(''); // Try to remove the default value ;)
 </script>

@@ -4,7 +4,7 @@ import {
   useId,
 } from 'vue';
 
-import type { IVoInput } from '@/components/VoInput/VoInput.types.ts';
+import type { IVoInput } from '@/components/input/VoInput/VoInput.types.ts';
 
 import { isNumber } from '@sniptt/guards';
 
