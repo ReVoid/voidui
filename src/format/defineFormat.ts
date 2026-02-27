@@ -7,7 +7,7 @@ import {
   isNull,
 } from '@sniptt/guards';
 
-type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string
+type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
 
 /**
  * Format function wrapper to omit `undefined` and `null` values and check argument and return types.

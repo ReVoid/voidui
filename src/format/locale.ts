@@ -1,3 +1,4 @@
+import { defineFormat } from './defineFormat';
 
 // TODO: Implement with info https://simplelocalize.io/data/locales/ like below
 type Locale =
@@ -5,6 +6,6 @@ type Locale =
   | 'en-US'; // 🇺🇸
 
 // TODO: Implement
-export function locale() {
+export const locale = defineFormat((value: Locale) =>{
   throw new Error('format is not implemented');
-}
+});

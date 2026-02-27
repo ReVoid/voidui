@@ -1,4 +1,6 @@
+import { defineFormat } from './defineFormat';
+
 // TODO: Implement
-export function unbreakable() {
+export const unbreakable = defineFormat(() => {
   throw new Error('format is not implemented');
-}
+});

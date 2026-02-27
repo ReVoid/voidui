@@ -1,4 +1,6 @@
+import { defineFormat } from './defineFormat';
+
 // TODO: Implement
-export function time() {
+export const time = defineFormat(() => {
   throw new Error('format is not implemented');
-}
+});

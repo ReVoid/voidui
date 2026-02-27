@@ -1,4 +1,6 @@
+import { defineFormat } from './defineFormat';
+
 // TODO: Implement
-export function percentage() {
+export const percentage = defineFormat(() => {
   throw new Error('format is not implemented');
-}
+});
