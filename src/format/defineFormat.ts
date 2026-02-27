@@ -5,25 +5,27 @@ import {
 import {
   isUndefined,
   isNull,
+  isNumber
 } from '@sniptt/guards';
 
 type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
 
 /**
- * Format function wrapper to omit `undefined` and `null` values and check argument and return types.
+ * Format function wrapper to omit either `undefined`, `null` and `NaN` values and check argument and return types.
  *
  * @example
  * ```ts
- * export const currency = defineFormat((value: number, glyph: '$' | '€') => `${value} ${glyph}`);
+ * export const currency = defineFormat((value: number) => `${value} $`);
  *
- * currency(100, '$'); // '100 $'
- * currency(undefined, '$'); // ''
- * currency(null, '$'); // ''
+ * currency(300); // '3000 $'
+ * currency(undefined); // ''
+ * currency(null); // ''
+ * currency(NaN); // ''
  * ```
  */
 export function defineFormat<T, A extends unknown[]>(format: (value: T, ...args: A) => string): Format<T, A> {
   return (value, ...args) => {
-    if (isUndefined(value) || isNull(value)) {
+    if (isUndefined(value) || isNull(value) || Number.isNaN(value) || !Number.isFinite(value)) {
       return '';
     }
 
