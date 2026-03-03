@@ -5,19 +5,18 @@ import {
 import {
   isUndefined,
   isNull,
-  isNumber
 } from '@sniptt/guards';
 
 type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
 
 /**
- * Format function wrapper to omit either `undefined`, `null` and `NaN` values and check argument and return types.
+ * Format function decorator to omit `undefined`, `null` and `NaN` values and check argument and return types.
  *
  * @example
  * ```ts
  * export const currency = defineFormat((value: number) => `${value} $`);
  *
- * currency(300); // '3000 $'
+ * currency(300); // '300 $'
  * currency(undefined); // ''
  * currency(null); // ''
  * currency(NaN); // ''
