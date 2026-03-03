@@ -15,6 +15,7 @@ type Value = string | Array<Union.Nullable<string>>;
 
 export const unbreakable = defineFormat((value: Value) => {
   if (isArray(value)) {
+    // TODO: Optimize and reduce repeats
     return value
       .filter(isNonEmptyString)
       .map(replace)

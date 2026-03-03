@@ -5,6 +5,7 @@ import {
 import {
   isUndefined,
   isNull,
+  isNumber,
 } from '@sniptt/guards';
 
 type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
@@ -24,7 +25,11 @@ type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => 
  */
 export function defineFormat<T, A extends unknown[]>(format: (value: T, ...args: A) => string): Format<T, A> {
   return (value, ...args) => {
-    if (isUndefined(value) || isNull(value) || Number.isNaN(value) || !Number.isFinite(value)) {
+    if (isUndefined(value) || isNull(value)) {
+      return '';
+    }
+
+    if (isNumber(value) && (Number.isNaN(value) || !Number.isFinite(value))) {
       return '';
     }
 
