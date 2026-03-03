@@ -3,6 +3,8 @@ import { defineFormat } from './defineFormat';
 import {
   isArray,
   isNonEmptyString,
+  isUndefined,
+  isNull,
 } from '@sniptt/guards';
 
 import type {
@@ -13,12 +15,21 @@ const UNBREAKABLE_SPACE: string = '\xa0';
 
 type Value = string | Array<Union.Nullable<string>>;
 
+/**
+ * Remove blank values and add non-breaking spaces to prevent unexpected line breaks.
+ *
+ * @example
+ * ```ts
+ * unbreakable('You shall not pass!'); // 'You\xa0shall\xa0not\xa0pass!'
+ * unbreakable(['You', 'shall', 'not', 'pass!']); // 'You\xa0shall\xa0not\xa0pass!'
+ * ```
+ */
 export const unbreakable = defineFormat((value: Value) => {
   if (isArray(value)) {
-    // TODO: Optimize and reduce repeats
     return value
-      .filter(isNonEmptyString)
+      .filter((chunk) => !isUndefined(chunk) && !isNull(chunk))
       .map(replace)
+      .filter(isNonEmptyString)
       .join(UNBREAKABLE_SPACE);
   }
 

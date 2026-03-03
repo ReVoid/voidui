@@ -24,16 +24,15 @@ describe('format | unbreakable', () => {
       payload: ['You ', ' shall ', 'not', 'pass! '],
       expected: 'You\xa0shall\xa0not\xa0pass!',
     },
-    // TODO: Fix it
     {
-      payload: [undefined, null, '', ' ', '  '],
+      payload: [undefined, null, '\xa0', '', ' ', '  '],
       expected: '',
     },
     {
       payload: [],
       expected: '',
     },
-  ])(`Returns unbreakable string : $payload => $expected`, ({ payload, expected }) => {
+  ])(`Returns string with non-breaking spaces: $payload => $expected`, ({ payload, expected }) => {
     expect(unbreakable(payload)).toBe(expected);
   });
 });
