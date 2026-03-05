@@ -16,7 +16,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "submodule:update": "git submodule update --remote --recursive"
   },
   "dependencies": {
     "@sniptt/guards": "^0.2.0",
