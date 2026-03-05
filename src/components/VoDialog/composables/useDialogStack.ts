@@ -1,14 +1,20 @@
-import { useStack } from '@/submodules/voiduse/src/composables'
+import { createSharedComposable } from '@vueuse/core';
 
-// Used here for a purpose.
-const { items: dialogs, isOnTop: isActive, push, remove } = useStack<symbol>([]);
+import { useStack } from '@/submodules/voiduse/src/composables';
 
 // TODO: Implement persistent dialog option
-export function useDialogStack() {
+export const useDialogStack = createSharedComposable(() => {
+  const {
+    items: dialogs,
+    isOnTop: isActive,
+    push,
+    remove,
+  } = useStack<symbol>([]);
+
   return {
     dialogs,
     isActive,
     push,
     remove,
-  }
-}
+  };
+});
