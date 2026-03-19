@@ -52,6 +52,11 @@ const ROWS_ORDERS_OPTIONS: Component['Props']['rowsOrder'] = [
 ];
 
 const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
+
+// Emit test function
+function onSelected(v: typeof selected.value) {
+  console.log(v);
+}
 </script>
 
 <template>
@@ -72,6 +77,7 @@ const rowOrders = ref<Component['Props']['rowsOrder']>(['age:desc']);
       :rows-order="rowOrders"
       selectable
       :selector="(row) => row.name"
+      @update:selected="(v) => onSelected(v) "
     >
       <template #header[name]="{ header }">
         <strong>

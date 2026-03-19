@@ -18,7 +18,10 @@ export type IVoTable<TColumns, R = TColumns> = {
   };
 
   Emits: {
-    'update:selected': [payload: R[]];
+    // That syntax doesn’t yield the proper result in certain cases. :(
+    // 'update:selected': [payload: R[]];
+    // 'update:selected': (payload: R[]) => void; // And that one too :(.
+    (e: 'update:selected', payload: R[]): void;
   };
 
   Slots: {
