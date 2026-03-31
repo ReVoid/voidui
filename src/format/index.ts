@@ -9,6 +9,7 @@ export * from './percentage.ts';
 export * from './date.ts';
 export * from './time.ts';
 export * from './duration.ts';
+export * from './timeZone.ts';
 
 // wording
 export * from './plural.ts';
