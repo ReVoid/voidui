@@ -15,7 +15,7 @@ type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => 
  *
  * @example
  * ```ts
- * export const currency = defineFormat((value: number) => `${value} $`);
+ * const currency = defineFormat((value: number) => `${value} $`);
  *
  * currency(300); // '300 $'
  * currency(undefined); // ''
