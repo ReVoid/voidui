@@ -7,6 +7,7 @@ export * from './percentage.ts';
 
 // dates and times
 export * from './date.ts';
+export * from './month.ts';
 export * from './time.ts';
 export * from './duration.ts';
 export * from './timeZone.ts';
