@@ -1,21 +1,25 @@
+import { type VNode } from 'vue';
 
 
 export interface IVoInputDate<T extends DateValue> {
   Props: {
-    date?: T
-  },
-  Emits: {},
-  Slots: {},
+    date?: T;
+  };
+  Emits: {};
+  Slots: {
+    default: (scope: never) => VNode[];
+  };
 }
 
-type DateValue = string | Date | DateExpanded;
-
-type DateExpanded = {
+type DateTime = {
   year: number;
   month: number;
   day: number;
   hour: number;
   minute: number;
   second: number;
-  millisecond: number;
 };
+
+type DateValue = string | Date | DateTime;
+
+
