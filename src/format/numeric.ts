@@ -1,5 +1,21 @@
 import { defineFormat } from './defineFormat.ts';
 
-// TODO: Implement
-// This is just a placeholder.
-export const numeric = defineFormat((value: number) => `${value}`);
+type FractionConstraints = {
+  min?: number;
+  max?: number;
+};
+
+// TODO: Add tests
+// TODO: Prevent fraction rounding.
+export const numeric = defineFormat((value: number, fractions?: FractionConstraints) => {
+  const { min = 0, max = 0 } = fractions ?? {};
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    useGrouping: true,
+    minimumFractionDigits: min,
+    maximumFractionDigits: max,
+  });
+
+  return formatter.format(value);
+});

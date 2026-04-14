@@ -1,6 +1,7 @@
 import { defineFormat } from './defineFormat';
+import { numeric } from './numeric';
 
-// TODO: Implement
-export const percentage = defineFormat(() => {
-  throw new Error('format is not implemented');
+// TODO: Add tests.
+export const percentage = defineFormat((value: number) => {
+  return numeric(value);
 });

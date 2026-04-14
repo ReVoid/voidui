@@ -1,4 +1,6 @@
 import { defineFormat } from './defineFormat';
+import { numeric } from '@/format/numeric.ts';
+import { unbreakable } from '@/format/unbreakable.ts';
 
 /**
  * ISO 4217 currency codes.
@@ -177,5 +179,5 @@ type Variant =
 // TODO: Implement
 export const currency = defineFormat((value: number, currency: Currency, variant: Variant = 'Symbol', locale: string = "en-US") => {
   // Remember to use numeric format with the value.
-  throw new Error('currency() is not implemented');
+  return unbreakable([numeric(value, { min: 0, max: 2 }), '$'])
 });
