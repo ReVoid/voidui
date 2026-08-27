@@ -12,9 +12,10 @@ defineOptions({
 type Component = IVoButton;
 
 const props = withDefaults(defineProps<Component['Props']>(), {
+  variant: 'Regular',
+  size: 'Medium',
   disabled: false,
   loading: false,
-  variant: 'Regular',
 });
 
 const emit = defineEmits<Component['Emits']>();

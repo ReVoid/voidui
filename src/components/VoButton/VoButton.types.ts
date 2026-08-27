@@ -12,7 +12,7 @@ export interface IVoButton {
   Props: {
     disabled?: boolean;
   } & INavigation
-    & ISize
+    & ISize<'Medium' | 'Small'>
     & IClassNames
     & ILoading
     & IVariant<'Regular' | 'Ghost' | 'Outlined'>;

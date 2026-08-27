@@ -19,6 +19,7 @@ function onClick() {
     <VoButton
       :disabled="isDisabled"
       to="/"
+      size="Small"
       @click="onClick"
     >
       Click me
