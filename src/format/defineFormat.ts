@@ -4,7 +4,8 @@ import {
 
 import {
   isNullOrUndefined,
-  isNumber,
+  isNan,
+  isInfinite
 } from '@sindresorhus/is';
 
 type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
@@ -28,7 +29,7 @@ export function defineFormat<T, A extends unknown[]>(format: (value: T, ...args:
       return '';
     }
 
-    if (isNumber(value) && (Number.isNaN(value) || !Number.isFinite(value))) {
+    if (isNan(value) || isInfinite(value)) {
       return '';
     }
 
