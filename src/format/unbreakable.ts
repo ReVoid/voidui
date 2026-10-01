@@ -1,11 +1,10 @@
 import { defineFormat } from './defineFormat';
 
 import {
+  isNullOrUndefined,
   isArray,
-  isNonEmptyString,
-  isUndefined,
-  isNull,
-} from '@sniptt/guards';
+  isNonEmptyStringAndNotWhitespace,
+} from '@sindresorhus/is';
 
 import type {
   Union,
@@ -27,9 +26,9 @@ type Value = string | Array<Union.Nullable<string>>;
 export const unbreakable = defineFormat((value: Value) => {
   if (isArray(value)) {
     return value
-      .filter((chunk) => !isUndefined(chunk) && !isNull(chunk))
+      .filter((chunk) => !isNullOrUndefined(chunk))
       .map(replace)
-      .filter(isNonEmptyString)
+      .filter(isNonEmptyStringAndNotWhitespace)
       .join(UNBREAKABLE_SPACE);
   }
 

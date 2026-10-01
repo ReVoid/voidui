@@ -1,6 +1,7 @@
-import { isNumber } from '@sniptt/guards';
+import { isNumber } from '@sindresorhus/is'
 
 import { defineFormat } from './defineFormat';
+
 import { unbreakable } from '@/format/unbreakable.ts';
 
 

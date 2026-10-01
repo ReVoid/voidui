@@ -1,6 +1,15 @@
 <script setup lang="ts" generic="TColumns extends Record<string, unknown>, R = TColumns">
 import { computed } from 'vue';
 
+import { isArray } from '@sindresorhus/is';
+
+import {
+  isEqual,
+  pick,
+  orderBy,
+  xorWith,
+} from 'lodash-es';
+
 import {
   type IVoTable,
   type Columns,
@@ -13,10 +22,6 @@ import {
   VoTableCell,
   VoTablePlaceholder,
 } from '../index';
-
-import { isEqual, pick, orderBy, xorWith } from 'lodash-es';
-
-import { isArray } from '@sniptt/guards';
 
 type Component = IVoTable<TColumns, R>;
 
@@ -100,40 +105,21 @@ function rowKey(row: TColumns): string {
         <!-- Just a placeholder for an extra column ;)  -->
       </VoTableCell>
 
-      <VoTableCell
-        v-for="(column, name) in columns"
-        :key="name"
-      >
-        <slot
-          :name="`header[${name as string}]` as keyof Component['Slots']"
-          :header="column"
-        >
+      <VoTableCell v-for="(column, name) in columns" :key="name">
+        <slot :name="`header[${name as string}]` as keyof Component['Slots']" :header="column">
           {{ column.title }}
         </slot>
       </VoTableCell>
     </VoTableHeader>
 
     <VoTableBody v-if="rows.length">
-      <VoTableRow
-        v-for="row in rows"
-        :key="rowKey(row)"
-      >
+      <VoTableRow v-for="row in rows" :key="rowKey(row)">
         <VoTableCell v-if="props.selectable">
-          <input
-            :checked="isSelected(row)"
-            type="checkbox"
-            @change="select(row)"
-          />
+          <input :checked="isSelected(row)" type="checkbox" @change="select(row)" />
         </VoTableCell>
 
-        <VoTableCell
-          v-for="(_, name) in columns"
-          :key="name"
-        >
-          <slot
-            :name="`row[${name as string}]` as keyof Component['Slots']"
-            :row="row"
-          >
+        <VoTableCell v-for="(_, name) in columns" :key="name">
+          <slot :name="`row[${name as string}]` as keyof Component['Slots']" :row="row">
             {{ row[name as keyof typeof row] }}
           </slot>
         </VoTableCell>
@@ -141,17 +127,12 @@ function rowKey(row: TColumns): string {
     </VoTableBody>
 
     <VoTableBody v-else>
-      <VoTablePlaceholder>
-        No data
-      </VoTablePlaceholder>
+      <VoTablePlaceholder> No data </VoTablePlaceholder>
     </VoTableBody>
 
     <VoTableFooter>
       <VoTableRow>
-        <VoTableCell
-          v-for="(column, name) in columns"
-          :key="name"
-        >
+        <VoTableCell v-for="(column, name) in columns" :key="name">
           {{ name }}
         </VoTableCell>
       </VoTableRow>

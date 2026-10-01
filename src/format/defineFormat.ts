@@ -3,10 +3,9 @@ import {
 } from 'ts-toolbelt';
 
 import {
-  isUndefined,
-  isNull,
+  isNullOrUndefined,
   isNumber,
-} from '@sniptt/guards';
+} from '@sindresorhus/is';
 
 type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
 
@@ -25,7 +24,7 @@ type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => 
  */
 export function defineFormat<T, A extends unknown[]>(format: (value: T, ...args: A) => string): Format<T, A> {
   return (value, ...args) => {
-    if (isUndefined(value) || isNull(value)) {
+    if (isNullOrUndefined(value)) {
       return '';
     }
 

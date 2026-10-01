@@ -4,9 +4,9 @@ import {
   useId,
 } from 'vue';
 
-import type { IVoInput } from '@/components/input/VoInput/VoInput.types.ts';
+import { isNumber } from '@sindresorhus/is'
 
-import { isNumber } from '@sniptt/guards';
+import type { IVoInput } from '@/components/input/VoInput/VoInput.types.ts';
 
 type Component = IVoInput<T>;
 
