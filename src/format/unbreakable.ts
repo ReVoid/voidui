@@ -6,13 +6,9 @@ import {
   isNonEmptyStringAndNotWhitespace,
 } from '@sindresorhus/is';
 
-import type {
-  Union,
-} from 'ts-toolbelt';
-
 const UNBREAKABLE_SPACE: string = '\xa0';
 
-type Value = string | Array<Union.Nullable<string>>;
+type Value = string | Array<string | undefined | null>;
 
 /**
  * Remove blank values and add non-breaking spaces to prevent unexpected line breaks.

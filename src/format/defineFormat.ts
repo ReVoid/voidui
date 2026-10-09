@@ -1,14 +1,10 @@
 import {
-  type Union,
-} from 'ts-toolbelt';
-
-import {
   isNullOrUndefined,
   isNan,
   isInfinite
 } from '@sindresorhus/is';
 
-type Format<T, A extends unknown[]> = (value: Union.Nullable<T>, ...args: A) => string;
+type Format<T, A extends unknown[]> = (value: T | undefined | null, ...args: A) => string;
 
 /**
  * Format function decorator to omit `undefined`, `null` and `NaN` values and check argument and return types.

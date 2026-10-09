@@ -1,8 +1,6 @@
-import { Union } from 'ts-toolbelt';
-
 import type { Locale } from '@/submodules/voiduse/src/composables/useLocale/useLocale.types.ts';
 
-type Value = Union.Nullable<number | Date>;
+type Value = number | Date | undefined | null;
 
 type Variant = 'Long' | 'Short' | 'Numeric';
 
@@ -39,7 +37,7 @@ function month(value: Value, variant: Variant): string;
  * month(1, 'ru-RU'); // 'январь'
  * ```
  */
-function month(value: Value, locale: Locale): string;
+function month(value?: Value, locale: Locale): string;
 
 /**
  * Get month name.
