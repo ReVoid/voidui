@@ -13,7 +13,7 @@ type Variant = 'Long' | 'Short' | 'Numeric';
  * month(new Date(2077, 0, 1)); // 'January'
  * ```
  */
-function month(value: Value): string;
+export function month(value: Value): string;
 
 /**
  * Get month name.
@@ -25,7 +25,7 @@ function month(value: Value): string;
  * month(1, 'Numeric'); // '1'
  * ```
  */
-function month(value: Value, variant: Variant): string;
+export function month(value: Value, variant: Variant): string;
 
 /**
  * Get month name.
@@ -37,7 +37,7 @@ function month(value: Value, variant: Variant): string;
  * month(1, 'ru-RU'); // 'январь'
  * ```
  */
-function month(value?: Value, locale: Locale): string;
+export function month(value: Value, locale: Locale): string;
 
 /**
  * Get month name.
@@ -47,7 +47,7 @@ function month(value?: Value, locale: Locale): string;
  * month(1, 'Long', 'en-US'); // 'January'
  * ```
  */
-function month(value: Value, variant: Variant, locale: Locale): string;
+export function month(value: Value, variant: Variant, locale: Locale): string;
 
 // TODO: Implement with overload.
 /**
@@ -57,6 +57,6 @@ function month(value: Value, variant: Variant, locale: Locale): string;
  * @param variant
  * @param locale
  */
-function month(value: Value, variant: Variant | Locale, locale: Locale): string {
+export function month(value: Value, variant?: Variant | Locale, locale?: Locale): string {
   throw new Error('format is not implemented');
 }
