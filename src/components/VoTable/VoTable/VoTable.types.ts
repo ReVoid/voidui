@@ -1,5 +1,4 @@
 import {
-  type EmitFn,
   type VNode,
 } from 'vue';
 
@@ -18,16 +17,12 @@ export type IVoTable<TColumns, R = TColumns> = {
     loading?: boolean;
   };
 
-  Emits: EmitFn<{
-    'update:selected': [payload: R[]];
-  }>;
-
-  // Emits: {
-  //   // That syntax doesn’t yield the proper result in certain cases. :(
-  //   // 'update:selected': [payload: R[]];
-  //   // 'update:selected': (payload: R[]) => void; // And that one too :(.
-  //   (e: 'update:selected', payload: R[]): void; // Only this one works without wrappers
-  // };
+  Emits: {
+    // That syntax doesn’t yield the proper result in certain cases. :(
+    // 'update:selected': [payload: R[]];
+    // 'update:selected': (payload: R[]) => void; // And that one too :(.
+    (e: 'update:selected', payload: R[]): void; // Only this one works without wrappers
+  };
 
   Slots: {
     header?: () => VNode[];
