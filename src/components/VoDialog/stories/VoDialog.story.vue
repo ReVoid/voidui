@@ -1,22 +1,17 @@
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-} from 'vue';
+import { ref, computed } from 'vue';
 
 import { VoDialog } from '@/components';
 
 const dialog_1 = ref<boolean>(false);
 const dialog_2 = ref<boolean>(false);
 const dialog_3 = ref<boolean>(false);
+const dialog_4 = ref<boolean>(false);
+const dialog_5 = ref<boolean>(false);
 
 // For demo purposes only.
 const isAnyDialogVisible = computed<boolean>(() => {
-  return [
-    dialog_1,
-    dialog_2,
-    dialog_3,
-  ].some((dialog) => dialog.value);
+  return [dialog_1, dialog_2, dialog_3, dialog_4, dialog_5].some((dialog) => dialog.value);
 });
 </script>
 
@@ -37,6 +32,14 @@ const isAnyDialogVisible = computed<boolean>(() => {
         <span>3</span>
         <input type="checkbox" v-model="dialog_3" />
       </label>
+      <label>
+        <span>4</span>
+        <input type="checkbox" v-model="dialog_4" />
+      </label>
+      <label>
+        <span>5</span>
+        <input type="checkbox" v-model="dialog_5" />
+      </label>
     </div>
 
     <VoDialog v-model:visible="dialog_1" closable>
@@ -51,6 +54,10 @@ const isAnyDialogVisible = computed<boolean>(() => {
     <VoDialog v-model:visible="dialog_2" closable> Dialog 2 </VoDialog>
 
     <VoDialog v-model:visible="dialog_3" closable> Dialog 3 </VoDialog>
+
+    <VoDialog v-model:visible="dialog_4" closable persistent> Dialog 4 </VoDialog>
+
+    <VoDialog v-model:visible="dialog_5" closable persistent> Dialog 5 </VoDialog>
   </article>
 </template>
 
