@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch, useId, onUnmounted } from 'vue';
 
 import { onKeyStroke } from '@vueuse/core';
 
@@ -33,12 +33,12 @@ const emit = defineEmits<Emits>();
 
 const slots = defineSlots<Slots>();
 
+const id = useId();
+
 const dialogs = useDialogStack();
 
-const id = Symbol('VoDialog.vue');
-
 const isActive = computed<boolean>(() => {
-  return dialogs.isActive(id);
+  return dialogs.isOnTop(id);
 });
 
 // DOM node to append to.
@@ -88,6 +88,10 @@ watch(
     immediate: true,
   },
 );
+
+onUnmounted(() => {
+  dialogs.remove(id);
+});
 </script>
 
 <template>
