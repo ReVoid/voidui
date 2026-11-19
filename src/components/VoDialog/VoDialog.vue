@@ -35,7 +35,7 @@ const slots = defineSlots<Slots>();
 
 const id = useId();
 
-const entry = computed(() => {
+const dialog = computed(() => {
   return {
     id,
     visible: visible.value,
@@ -46,7 +46,7 @@ const entry = computed(() => {
 const dialogs = useDialogStack();
 
 const isActive = computed<boolean>(() => {
-  return dialogs.isActive(entry.value);
+  return dialogs.isActive(dialog.value);
 });
 
 // DOM node to append to.
@@ -73,13 +73,13 @@ onKeyStroke('Escape', (e) => {
 });
 
 watch(
-  entry,
-  (currentEntry) => {
-    if (currentEntry.visible) {
-      return dialogs.push(currentEntry);
+  dialog,
+  (current) => {
+    if (current.visible) {
+      return dialogs.push(current);
     }
 
-    dialogs.remove(currentEntry);
+    dialogs.remove(current);
   },
   {
     // Don't remove! This ensures the watcher runs immediately in case the dialog is visible initially.
@@ -98,7 +98,7 @@ watch(
 );
 
 onUnmounted(() => {
-  dialogs.remove(entry.value);
+  dialogs.remove(dialog.value);
 });
 </script>
 
