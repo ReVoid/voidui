@@ -1,4 +1,4 @@
-import { defineFormat } from '@/format/defineFormat.ts';
+import { defineFormat } from '@/format';
 
 // TODO: Design and implement.
 const timeZone = defineFormat((value: string) => {

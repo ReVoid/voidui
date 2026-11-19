@@ -1,8 +1,9 @@
 import { isNumber } from '@sindresorhus/is'
 
-import { defineFormat } from './defineFormat';
-
-import { unbreakable } from '@/format/unbreakable.ts';
+import {
+  defineFormat,
+  unbreakable,
+} from '@/format';
 
 
 // Millisecond amount.

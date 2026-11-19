@@ -1,4 +1,4 @@
-import { defineFormat } from './defineFormat.ts';
+import { defineFormat } from '@/format';
 
 type FractionConstraints = {
   min?: number;

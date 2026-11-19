@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
-import { numeric } from '../numeric';
+
+import { numeric } from '@/format';
 
 describe('format | numeric', () => {
   test.each([

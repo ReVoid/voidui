@@ -1,6 +1,8 @@
-import { defineFormat } from './defineFormat';
-import { numeric } from '@/format/numeric.ts';
-import { unbreakable } from '@/format/unbreakable.ts';
+import {
+  defineFormat,
+  numeric,
+  unbreakable,
+} from '@/format';
 
 /**
  * ISO 4217 currency codes.

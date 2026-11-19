@@ -1,4 +1,4 @@
-import { defineFormat } from './defineFormat';
+import { defineFormat } from '@/format';
 
 // TODO: Implement
 export const plural = defineFormat(() => {

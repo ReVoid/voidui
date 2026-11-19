@@ -1,7 +1,7 @@
-export { defineFormat } from './defineFormat.ts'
+export { defineFormat } from './defineFormat';
 
 // numbers
-export * from './numeric.ts';
+export * from './numeric';
 export * from './currency.ts';
 export * from './percentage.ts';
 
@@ -16,4 +16,4 @@ export * from './timeZone.ts';
 export * from './plural.ts';
 
 // utilities
-export * from './unbreakable.ts';
+export * from './unbreakable';
